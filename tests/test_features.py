@@ -38,20 +38,21 @@ class TestFeatures(TestCase):
     def test_standard_scaler_init(self):
         scaler = StandardScaler()
         assert isinstance(scaler, StandardScaler), "scaler is not a StandardScaler object"
-        
+
     def test_standard_scaler_get_mean(self):
         scaler = StandardScaler()
         data = [[0, 0], [0, 0], [1, 1], [1, 1]]
         expected = np.array([0.5, 0.5])
         scaler.fit(data)
-        assert (scaler.mean == expected).all(), "scaler fit does not return expected mean {}. Got {}".format(expected, scaler.mean)
-        
+        assert (scaler.mean_ == expected).all(), "scaler fit does not return expected mean {}. Got {}".format(expected,scaler.mean_)
+
     def test_standard_scaler_transform(self):
         scaler = StandardScaler()
         data = [[0, 0], [0, 0], [1, 1], [1, 1]]
         expected = np.array([[-1., -1.], [-1., -1.], [1., 1.], [1., 1.]])
         scaler.fit(data)
-        assert (result == expected).all(), "Scaler transform does not return expected values. Expect {}. Got: {}".format(expected.reshape(1,-1), result.reshape(1,-1))
+        result = scaler.transform(data)
+        assert (result == expected).all(), "Scaler transform does not return expected values. Expect {}. Got: {}".format(expected.reshape(1, -1), result.reshape(1, -1))
         
     def test_standard_scaler_single_value(self):
         data = [[0, 0], [0, 0], [1, 1], [1, 1]]
